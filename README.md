@@ -6,6 +6,7 @@ Steps to run:
 3. Else, run in your favorite IDE via the PosseUpApplication.class
 
 To hit the application through Postman:
+
 GET:
 http://localhost:8080/members/
 
