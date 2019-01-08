@@ -1,8 +1,8 @@
 package com.stam.posseup.exception;
 
-public class MemberExecption extends RuntimeException {
+public class MemberNotFoundException extends RuntimeException {
 
-    public MemberExecption(Long id) {
+    public MemberNotFoundException(Long id) {
         super("Sorry Partner, Member with id " + id + " does not exist");
 
     }

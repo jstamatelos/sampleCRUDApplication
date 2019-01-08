@@ -1,7 +1,8 @@
 package com.stam.posseup.service;
 
+import com.stam.posseup.advice.MemberExceptionAdvice;
 import com.stam.posseup.entity.Member;
-import com.stam.posseup.exception.MemberExecption;
+import com.stam.posseup.exception.MemberNotFoundException;
 import com.stam.posseup.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class MemberService {
     @Autowired
     private MemberRepository repository;
 
+    @Autowired
+    private MemberExceptionAdvice memberExecption;
+
     public List<Member> listAllMembers() {
         return repository.findAll();
 
@@ -27,7 +31,7 @@ public class MemberService {
     }
 
     public Member retrieveMemberById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new MemberExecption(id));
+        return repository.findById(id).orElseThrow(() -> new MemberNotFoundException(id));
 
     }
 
