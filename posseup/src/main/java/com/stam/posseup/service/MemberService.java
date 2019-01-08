@@ -1,7 +1,10 @@
 package com.stam.posseup.service;
 
+import com.stam.posseup.advice.MemberExceptionAdvice;
 import com.stam.posseup.entity.Member;
-import com.stam.posseup.exception.MemberExecption;
+import com.stam.posseup.exception.MemberNameException;
+import com.stam.posseup.exception.MemberNotFoundException;
+import com.stam.posseup.exception.MemberPositionException;
 import com.stam.posseup.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +24,23 @@ public class MemberService {
 
     }
 
+    // Todo :: Enhance with remaining special character and prohibited words in BlackListValidation class
     public Member createNewMember(Member newMember) {
+
+        if (newMember.getName().contains("/")) {
+            throw new MemberNameException(newMember.getName());
+        }
+
+        if (newMember.getPosition().equalsIgnoreCase("Captain")) {
+            throw new MemberPositionException(newMember.getPosition());
+        }
+
         return repository.save(newMember);
 
     }
 
     public Member retrieveMemberById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new MemberExecption(id));
+        return repository.findById(id).orElseThrow(() -> new MemberNotFoundException(id));
 
     }
 

@@ -1,14 +1,11 @@
 package com.stam.posseup.controller;
 
 import com.stam.posseup.entity.Member;
-import com.stam.posseup.exception.MemberExecption;
-import com.stam.posseup.repository.MemberRepository;
 import com.stam.posseup.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class MemberController {
