@@ -1,4 +1,4 @@
-# Sample CRUD Application that will manage a Read Dead Redemption Online Posse
+# Sample CRUD Application that will manage a Red Dead Redemption Online Posse
 
 Steps to run:
 1. Clone down the application
