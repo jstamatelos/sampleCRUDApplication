@@ -8,10 +8,12 @@ Steps to run:
 To hit the application through Postman:
 GET:
 http://localhost:8080/members/
+
 Will return list of all members (pre-loaded by the PreLoadDatabase.class)
 
 GET:
 http://localhost:8080/members/{id}
+
 Will return member by id
 
 POST:
@@ -25,10 +27,12 @@ Will add a member with the given name and position
 
 PUT:
 http://localhost:8080/members/{id}
+
 Will update existing member with specified Id
 
 DELETE:
 http://localhost:8080/members/{id}
+
 Will delete the member with specified id
 
 
