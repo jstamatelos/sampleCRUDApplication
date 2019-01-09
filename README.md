@@ -36,4 +36,9 @@ http://YOUR-LOCAL/members/{id}
 
 Will delete the member with specified id
 
+Swagger Spec:
+1. Go to http://YOUR-LOCAL/swagger-ui.html#/
+2. Play with the APIs!
+
+
 
