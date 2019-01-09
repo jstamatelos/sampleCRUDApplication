@@ -26,15 +26,6 @@ public class MemberService {
 
     // Todo :: Enhance with remaining special character and prohibited words in BlackListValidation class
     public Member createNewMember(Member newMember) {
-
-        if (newMember.getName().contains("/")) {
-            throw new MemberNameException(newMember.getName());
-        }
-
-        if (newMember.getPosition().equalsIgnoreCase("Captain")) {
-            throw new MemberPositionException(newMember.getPosition());
-        }
-
         return repository.save(newMember);
 
     }
