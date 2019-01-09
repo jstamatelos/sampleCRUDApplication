@@ -5,6 +5,8 @@ import com.stam.posseup.entity.Member;
 import com.stam.posseup.exception.MemberNameException;
 import com.stam.posseup.exception.MemberPositionException;
 import com.stam.posseup.service.MemberService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ public class MemberController {
     private MemberService service;
 
     // To get a list of all members
+    @ApiOperation(value = "Obtain a list of all members")
     @GetMapping("/members")
     public List<Member> listAll(){
         logger.info("Getting all members :: {} ", service.listAllMembers());
@@ -36,6 +39,7 @@ public class MemberController {
 
     // To add a new member to the posse
     // Rolled my own validation to check for the position names, only allowing three positions to be used
+    @ApiOperation(value = "Add a new member to the posse")
     @PostMapping("/members")
     public Member addNewMember(@Valid @RequestBody Member newMember) {
         logger.info("Creating new member");
@@ -52,6 +56,7 @@ public class MemberController {
     }
 
     // To get a member by id
+    @ApiOperation(value = "Obtain a member by their id")
     @GetMapping("/members/{id}")
     public Member getMemberById(@PathVariable Long id) {
         logger.info("Getting memeber by id :: {}", service.retrieveMemberById(id));
@@ -60,6 +65,7 @@ public class MemberController {
     }
 
     // To edit a Members Role or name
+    @ApiOperation(value = "Update a member Role or Name by their id")
     @PutMapping("/members/{id}")
     public Member editMember(@Valid @RequestBody Member newMember, @PathVariable Long id) {
         logger.info("Updating memeber by id :: {} ", service.updateMember(newMember, id));
@@ -68,6 +74,7 @@ public class MemberController {
     }
 
     // To delete a Member by id
+    @ApiOperation(value = "Delete a member by their id")
     @DeleteMapping("/members/{id}")
     public void deleteMemberById(@PathVariable Long id) {
         logger.info("Deleteing memeber by id");
