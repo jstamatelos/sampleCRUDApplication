@@ -1,11 +1,18 @@
 package com.stam.posseup.controller;
 
 import com.stam.posseup.entity.Member;
+import com.stam.posseup.exception.MemberNameException;
+import com.stam.posseup.exception.MemberPositionException;
 import com.stam.posseup.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+
+import static com.stam.posseup.positions.PositionConstants.LEADER;
+import static com.stam.posseup.positions.PositionConstants.MEMBER;
+import static com.stam.posseup.positions.PositionConstants.PROSPECT;
 
 @RestController
 public class MemberController {
@@ -23,7 +30,13 @@ public class MemberController {
 
     // To add a new member to the posse
     @PostMapping("/members")
-    public Member addNewMember(@RequestBody Member newMember) {
+    public Member addNewMember(@Valid @RequestBody Member newMember) {
+
+        if (!newMember.getPosition().equalsIgnoreCase(LEADER) && !newMember.getPosition().equalsIgnoreCase(MEMBER) && !newMember.getPosition().equalsIgnoreCase(PROSPECT)) {
+            throw new MemberPositionException(newMember.getPosition());
+
+        }
+
         return service.createNewMember(newMember);
 
     }
@@ -37,7 +50,7 @@ public class MemberController {
 
     // To edit a Members Role or name
     @PutMapping("/members/{id}")
-    public Member editMember(@RequestBody Member newMember, @PathVariable Long id) {
+    public Member editMember(@Valid @RequestBody Member newMember, @PathVariable Long id) {
         return service.updateMember(newMember,id);
 
     }

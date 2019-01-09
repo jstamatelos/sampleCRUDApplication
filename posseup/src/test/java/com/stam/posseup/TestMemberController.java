@@ -81,11 +81,11 @@ public class TestMemberController {
     }
 
     @Test
-    public void testAddingNewMemberIsSuccessfull() throws Exception {
+    public void testAddingNewMemberIsSuccessful() throws Exception {
 
         String memberAsJson;
         long id = 2;
-        Member newMember = new Member("Earl","Full Member");
+        Member newMember = new Member("Earl","Leader");
         newMember.setId(id);
 
         try {
@@ -102,6 +102,115 @@ public class TestMemberController {
 
     }
 
+    @Test
+    public void testNewMemberCannotBeCreatedWithNameTooShort() throws Exception {
+
+        String memberAsJson;
+        long id = 2;
+        Member newMember = new Member("","Member");
+        newMember.setId(id);
+
+        try {
+            memberAsJson = new ObjectMapper().writeValueAsString(newMember);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        when(memberService.createNewMember(newMember)).thenReturn(newMember);
+        mockMvc.perform(post("/members")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(memberAsJson))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void testNewMemberCannotBeCreatedWithNameTooLong() throws Exception {
+
+        String memberAsJson;
+        long id = 2;
+        Member newMember = new Member("ThisNameIsGoingToBeLongerThanTwentyFourCharacters","Member");
+        newMember.setId(id);
+
+        try {
+            memberAsJson = new ObjectMapper().writeValueAsString(newMember);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        when(memberService.createNewMember(newMember)).thenReturn(newMember);
+        mockMvc.perform(post("/members")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(memberAsJson))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void testNewMemberCannotBeCreatedWithNameContainingSpecialCharacters() throws Exception {
+
+        String memberAsJson;
+        long id = 2;
+        Member newMember = new Member("*@(*#*@@/","Member");
+        newMember.setId(id);
+
+        try {
+            memberAsJson = new ObjectMapper().writeValueAsString(newMember);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        when(memberService.createNewMember(newMember)).thenReturn(newMember);
+        mockMvc.perform(post("/members")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(memberAsJson))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void testNewMemberCannotBeCreatedWithUnacceptablePosition() throws Exception {
+
+        String memberAsJson;
+        long id = 2;
+        Member newMember = new Member("Carl","BIG BOSS MAN");
+        newMember.setId(id);
+
+        try {
+            memberAsJson = new ObjectMapper().writeValueAsString(newMember);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        when(memberService.createNewMember(newMember)).thenReturn(newMember);
+        mockMvc.perform(post("/members")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(memberAsJson))
+                .andExpect(status().isForbidden());
+
+    }
+
+    @Test
+    public void testNewMemberCannotBeCreatedWithUnacceptablePosition_EmptyPosition() throws Exception {
+
+        String memberAsJson;
+        long id = 2;
+        Member newMember = new Member("Carl","");
+        newMember.setId(id);
+
+        try {
+            memberAsJson = new ObjectMapper().writeValueAsString(newMember);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        when(memberService.createNewMember(newMember)).thenReturn(newMember);
+        mockMvc.perform(post("/members")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(memberAsJson))
+                .andExpect(status().isForbidden());
+
+    }
 
 
 }
