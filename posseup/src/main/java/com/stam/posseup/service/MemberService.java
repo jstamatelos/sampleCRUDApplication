@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class MemberService {
 
-    // Autowiring in the Member Repository so we can use it with instantiating multiple times
+    // Autowiring in the Member Repository so we can use it without instantiating multiple times
     @Autowired
     private MemberRepository repository;
 
@@ -26,15 +26,6 @@ public class MemberService {
 
     // Todo :: Enhance with remaining special character and prohibited words in BlackListValidation class
     public Member createNewMember(Member newMember) {
-
-        if (newMember.getName().contains("/")) {
-            throw new MemberNameException(newMember.getName());
-        }
-
-        if (newMember.getPosition().equalsIgnoreCase("Captain")) {
-            throw new MemberPositionException(newMember.getPosition());
-        }
-
         return repository.save(newMember);
 
     }
