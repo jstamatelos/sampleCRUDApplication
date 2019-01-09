@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class MemberService {
 
-    // Autowiring in the Member Repository so we can use it with instantiating multiple times
+    // Autowiring in the Member Repository so we can use it without instantiating multiple times
     @Autowired
     private MemberRepository repository;
 
