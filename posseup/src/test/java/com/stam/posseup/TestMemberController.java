@@ -212,5 +212,27 @@ public class TestMemberController {
 
     }
 
+    @Test
+    public void testNewMemberCannotBeCreatedWithUnacceptablePosition_PositionContaintsSpecialCharacters() throws Exception {
+
+        String memberAsJson;
+        long id = 2;
+        Member newMember = new Member("Carl","#&(*@&#$&//");
+        newMember.setId(id);
+
+        try {
+            memberAsJson = new ObjectMapper().writeValueAsString(newMember);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        when(memberService.createNewMember(newMember)).thenReturn(newMember);
+        mockMvc.perform(post("/members")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(memberAsJson))
+                .andExpect(status().isBadRequest());
+
+    }
+
 
 }
