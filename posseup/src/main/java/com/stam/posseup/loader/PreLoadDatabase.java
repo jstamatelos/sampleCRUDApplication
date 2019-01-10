@@ -1,6 +1,5 @@
 package com.stam.posseup.loader;
 
-import com.stam.posseup.advice.MemberExceptionAdvice;
 import com.stam.posseup.entity.Member;
 import com.stam.posseup.repository.MemberRepository;
 import org.slf4j.Logger;
