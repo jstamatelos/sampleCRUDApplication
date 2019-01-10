@@ -1,11 +1,7 @@
 package com.stam.posseup.controller;
 
-import com.stam.posseup.advice.MemberExceptionAdvice;
 import com.stam.posseup.entity.Member;
-import com.stam.posseup.exception.MemberNameException;
-import com.stam.posseup.exception.MemberPositionException;
 import com.stam.posseup.service.MemberService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,20 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.stam.posseup.positions.PositionConstants.LEADER;
-import static com.stam.posseup.positions.PositionConstants.MEMBER;
-import static com.stam.posseup.positions.PositionConstants.PROSPECT;
-
 @RestController
 public class MemberController {
 
-    public static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     // Autowiring in the MemberService so we can use it without instantiating multiple times
     @Autowired
     private MemberService service;
 
-    // To get a list of all members
     @ApiOperation(value = "Obtain a list of all members")
     @GetMapping("/members")
     public List<Member> listAll(){
@@ -37,25 +28,14 @@ public class MemberController {
 
     }
 
-    // To add a new member to the posse
-    // Rolled my own validation to check for the position names, only allowing three positions to be used
     @ApiOperation(value = "Add a new member to the posse")
     @PostMapping("/members")
     public Member addNewMember(@Valid @RequestBody Member newMember) {
         logger.info("Creating new member");
-
-        if (!newMember.getPosition().equalsIgnoreCase(LEADER) && !newMember.getPosition().equalsIgnoreCase(MEMBER) && !newMember.getPosition().equalsIgnoreCase(PROSPECT)) {
-            logger.error("Invalid position chosen :: {} ", newMember.getPosition());
-
-            throw new MemberPositionException(newMember.getPosition());
-
-        }
-
         return service.createNewMember(newMember);
 
     }
 
-    // To get a member by id
     @ApiOperation(value = "Obtain a member by their id")
     @GetMapping("/members/{id}")
     public Member getMemberById(@PathVariable Long id) {
@@ -64,7 +44,6 @@ public class MemberController {
 
     }
 
-    // To edit a Members Role or name
     @ApiOperation(value = "Update a member Role or Name by their id")
     @PutMapping("/members/{id}")
     public Member editMember(@Valid @RequestBody Member newMember, @PathVariable Long id) {
@@ -73,7 +52,6 @@ public class MemberController {
 
     }
 
-    // To delete a Member by id
     @ApiOperation(value = "Delete a member by their id")
     @DeleteMapping("/members/{id}")
     public void deleteMemberById(@PathVariable Long id) {
@@ -81,7 +59,5 @@ public class MemberController {
         service.deleteMember(id);
 
     }
-
-
 
 }
