@@ -7,6 +7,9 @@ Steps to run:
 
 To hit the application through Postman:
 
+PostMan Collection Link:
+https://www.getpostman.com/collections/bd8a57fd7c85d52e8111
+
 GET:
 http://YOUR-LOCAL/members/
 
